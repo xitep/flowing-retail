@@ -39,7 +39,7 @@ public class InventoryService {
    */
   public String pickItems(List<Item> items, String reason, String refId) {
     PickOrder pickOrder = new PickOrder().setItems(items);    
-    System.out.println("# Items picked: " + pickOrder);      
+//    System.out.println("# Items picked: " + pickOrder);
     return pickOrder.getPickId();
   }
 

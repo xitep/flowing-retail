@@ -29,3 +29,7 @@ camunda-db.mv.db
 /payment-rest/*.db
 /payment-rest/node-customer-credit-worker/node_modules
 /payment/*.db
+*.db
+*.iml
+/.idea/
+/run-all.sh

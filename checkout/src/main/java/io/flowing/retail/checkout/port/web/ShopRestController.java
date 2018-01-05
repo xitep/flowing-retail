@@ -2,8 +2,6 @@ package io.flowing.retail.checkout.port.web;
 
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +11,8 @@ import io.flowing.retail.checkout.domain.Customer;
 import io.flowing.retail.checkout.domain.Order;
 import io.flowing.retail.checkout.port.message.Message;
 import io.flowing.retail.checkout.port.message.MessageSender;
+
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class ShopRestController {
@@ -24,6 +24,7 @@ public class ShopRestController {
   public String placeOrder(@RequestParam(value = "customerId") String customerId) {
     
     Order order = new Order();
+    order.setCreatedTs(System.currentTimeMillis());
     order.addItem("article1", 5);
     order.addItem("article2", 10);
     
@@ -38,4 +39,14 @@ public class ShopRestController {
     return "{\"traceId\": \"" + message.getTraceId() + "\"}";
   }
 
+  @RequestMapping(path = "/api/cart/order-many", method = PUT)
+  public String placeOrders(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "numOrders") int numOrders) {
+    long start = System.nanoTime();
+    for (int i = 0; i < numOrders; i++) {
+      placeOrder(customerId);
+    }
+    long end = System.nanoTime();
+    System.out.println("Placed " + numOrders + " orders in " + TimeUnit.NANOSECONDS.toMillis(end-start) + " ms");
+    return "many";
+  }
 }

@@ -1,8 +1,6 @@
 package io.flowing.retail.order.port.persistence;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 import javax.inject.Singleton;
 
@@ -14,14 +12,20 @@ import io.flowing.retail.order.domain.Order;
 @Singleton
 public class OrderRepository {
 
-  private HashMap<String, Order> orderStorage = new HashMap<String, Order>();
+  private Map<String, Order> orderStorage =
+          Collections.synchronizedMap(new HashMap<String, Order>());
 
-  /**
-   * get the order for the specified orderId
-   */
-  public void persistOrder(Order order) {
+  public void createOrder(Order order) {
     order.setId(UUID.randomUUID().toString());
     orderStorage.put(order.getId(), order);
+  }
+
+  public void updateOrder(Order order) {
+    orderStorage.put(order.getId(), order);
+  }
+
+  public Order removeOrder(String orderId) {
+    return orderStorage.remove(orderId);
   }
 
   /**

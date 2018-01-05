@@ -32,9 +32,9 @@ public class MessageListener {
   @Transactional
   public void retrievePaymentCommandReceived(String messageJson) throws JsonParseException, JsonMappingException, IOException {
     Message<RetrievePaymentCommandPayload> message = new ObjectMapper().readValue(messageJson, new TypeReference<Message<RetrievePaymentCommandPayload>>(){});
-    RetrievePaymentCommandPayload retrievePaymentCommand = message.getPayload();    
-    
-    System.out.println("Retrieve payment: " + retrievePaymentCommand.getAmount() + " for " + retrievePaymentCommand.getRefId());
+    RetrievePaymentCommandPayload retrievePaymentCommand = message.getPayload();
+
+//    System.out.println("Retrieve payment: " + retrievePaymentCommand.getAmount() + " for " + retrievePaymentCommand.getRefId());
     
     camunda.getRuntimeService().createMessageCorrelation(message.getMessageType()) //
       .processInstanceBusinessKey(message.getTraceId())

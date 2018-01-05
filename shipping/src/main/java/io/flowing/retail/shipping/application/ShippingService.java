@@ -16,7 +16,7 @@ public class ShippingService {
    * @return shipment id created (also printed on the label of the parcel)
    */
   public String createShipment(String pickId, String recipientName, String recipientAddress, String logisticsProvider) {    
-    System.out.println("Shipping to " + recipientName + "\n\n" + recipientAddress);
+//    System.out.println("Shipping to " + recipientName + "\n\n" + recipientAddress);
     
     return UUID.randomUUID().toString();
   }

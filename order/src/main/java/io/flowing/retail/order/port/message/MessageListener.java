@@ -45,10 +45,11 @@ public class MessageListener {
     Message<Order> message = new ObjectMapper().readValue(messageJson, new TypeReference<Message<Order>>(){});
     Order order = message.getPayload();
     
-    System.out.println("New order placed, start flow. " + order);
+//    System.out.println("New order placed, start flow. " + order);
     
     // persist domain entity
-    repository.persistOrder(order);    
+    order.setOrderPlacedRecievedTs(System.currentTimeMillis());
+    repository.createOrder(order);
     
     // and kick of a new flow instance
     camunda.getRuntimeService().createMessageCorrelation(message.getMessageType())
@@ -78,7 +79,7 @@ public class MessageListener {
       .count();
     
     if (correlatingInstances==1) {
-      System.out.println("Correlating " + message + " to waiting flow instance");
+//      System.out.println("Correlating " + message + " to waiting flow instance");
       
       camunda.getRuntimeService().createMessageCorrelation(message.getMessageType())
         .processInstanceBusinessKey(message.getTraceId())
@@ -88,7 +89,7 @@ public class MessageListener {
         .correlateWithResult();
     } else {
       // ignoring event, not interested
-      System.out.println("Order context ignores event '" + message.getMessageType() + "'");
+//      System.out.println("Order context ignores event '" + message.getMessageType() + "'");
     }
     
   }  
