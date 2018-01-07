@@ -13,6 +13,7 @@ public class Order {
   protected List<OrderItem> items = new ArrayList<OrderItem>();
   private long createdTs;
   private long orderPlacedRecievedTs;
+  private long retrievePaymentAdapterTs;
   private long fetchGoodsAdapterTs;
   private long shipGoodsAdapterTs;
 
@@ -55,6 +56,14 @@ public class Order {
 
   public void setOrderPlacedRecievedTs(long orderPlacedRecievedTs) {
     this.orderPlacedRecievedTs = orderPlacedRecievedTs;
+  }
+
+  public long getRetrievePaymentAdapterTs() {
+    return retrievePaymentAdapterTs;
+  }
+
+  public void setRetrievePaymentAdapterTs(long retrievePaymentAdapterTs) {
+    this.retrievePaymentAdapterTs = retrievePaymentAdapterTs;
   }
 
   public long getFetchGoodsAdapterTs() {
