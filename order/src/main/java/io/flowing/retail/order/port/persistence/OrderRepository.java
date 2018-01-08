@@ -1,6 +1,7 @@
 package io.flowing.retail.order.port.persistence;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Singleton;
 
@@ -13,7 +14,7 @@ import io.flowing.retail.order.domain.Order;
 public class OrderRepository {
 
   private Map<String, Order> orderStorage =
-          Collections.synchronizedMap(new HashMap<String, Order>());
+          new ConcurrentHashMap<>();
 
   public void createOrder(Order order) {
     order.setId(UUID.randomUUID().toString());

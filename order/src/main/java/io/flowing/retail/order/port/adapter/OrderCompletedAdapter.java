@@ -32,7 +32,7 @@ public class OrderCompletedAdapter implements JavaDelegate {
     System.out.println(String.format("Order processed: received: %,dms / process-kickoff: %,dms / payment: %,dms / goods: %,dms / ship: %,dms / total: %,dms",
             order.getOrderPlacedRecievedTs() - order.getCreatedTs(),
             order.getRetrievePaymentAdapterTs() - order.getOrderPlacedRecievedTs(),
-            order.getFetchGoodsAdapterTs() - order.getOrderPlacedRecievedTs(),
+            order.getFetchGoodsAdapterTs() - order.getRetrievePaymentAdapterTs(),
             order.getShipGoodsAdapterTs() - order.getFetchGoodsAdapterTs(),
             now - order.getShipGoodsAdapterTs(),
             now - order.getCreatedTs()));
