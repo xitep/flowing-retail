@@ -3,6 +3,7 @@ package io.flowing.retail.checkout.port.web;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,10 +17,13 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 public class ShopRestController {
-  
+
   @Autowired
   private MessageSender messageSender;
-  
+
+  @Value("${flowing-retail.verbose}")
+  private boolean verbose;
+
   @RequestMapping(path = "/api/cart/order", method = PUT)
   public String placeOrder(@RequestParam(value = "customerId") String customerId) {
     
@@ -46,7 +50,9 @@ public class ShopRestController {
       placeOrder(customerId);
     }
     long end = System.nanoTime();
-    System.out.println("Placed " + numOrders + " orders in " + TimeUnit.NANOSECONDS.toMillis(end-start) + " ms");
-    return "many";
+    if (verbose) {
+      System.out.println("Placed " + numOrders + " orders in " + TimeUnit.NANOSECONDS.toMillis(end - start) + " ms");
+    }
+    return Integer.toString(numOrders);
   }
 }

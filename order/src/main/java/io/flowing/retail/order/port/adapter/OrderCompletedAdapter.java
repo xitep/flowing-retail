@@ -29,7 +29,8 @@ public class OrderCompletedAdapter implements JavaDelegate {
       throw new IllegalStateException("Unknown order: " + orderId);
     }
     long now = System.currentTimeMillis();
-    System.out.println(String.format("Order processed: received: %dms / process-kickoff: %dms / payment: %dms / goods: %dms / ship: %dms / total: %dms",
+    System.out.println(String.format("Order processed (%s): received: %dms / process-kickoff: %dms / payment: %dms / goods: %dms / ship: %dms / total: %dms",
+            order.getId(),
             order.getOrderPlacedRecievedTs() - order.getCreatedTs(),
             order.getRetrievePaymentAdapterTs() - order.getOrderPlacedRecievedTs(),
             order.getFetchGoodsAdapterTs() - order.getRetrievePaymentAdapterTs(),
