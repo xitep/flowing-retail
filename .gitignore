@@ -32,4 +32,3 @@ camunda-db.mv.db
 *.db
 *.iml
 /.idea/
-/run-all.sh
